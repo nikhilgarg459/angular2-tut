@@ -1,25 +1,24 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Hero } from './hero';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
+import 'rxjs/add/operator/switchMap';
 
 import { HeroService } from './hero.service';
 
 @Component({
     selector: 'hero-detail',
-    template: `
-            <div *ngIf="hero">
-                <h2>{{hero.name}} details!</h2>
-                <div><label>id: </label>{{hero.id}}</div>
-                <div>
-                    <label>name: </label>
-                    <input [(ngModel)]="hero.name" placeholder="name"/>
-                </div>
-            </div>    
-            `
+    templateUrl: './hero-detail.component.html',
+    styleUrls: ['./hero-detail.component.css'] 
 })
-export class HeroDetailComponent {
+export class HeroDetailComponent implements OnInit{
     @Input() hero: Hero;
+
+    ngOnInit(){
+        this.route.params
+        .switchMap((params: Params)=>this.heroService.getHero(+params['id']))
+        .subscribe(hero=> this.hero = hero);
+    }
 
     constructor(
         private heroService: HeroService,
@@ -27,6 +26,10 @@ export class HeroDetailComponent {
         private location: Location
     ) {
 
+    }
+
+    goBack(): void{
+        this.location.back();
     }
 
 }
