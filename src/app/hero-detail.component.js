@@ -10,8 +10,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var hero_1 = require("./hero");
+var router_1 = require("@angular/router");
+var common_1 = require("@angular/common");
+var hero_service_1 = require("./hero.service");
 var HeroDetailComponent = (function () {
-    function HeroDetailComponent() {
+    function HeroDetailComponent(heroService, route, location) {
+        this.heroService = heroService;
+        this.route = route;
+        this.location = location;
     }
     return HeroDetailComponent;
 }());
@@ -23,7 +29,10 @@ HeroDetailComponent = __decorate([
     core_1.Component({
         selector: 'hero-detail',
         template: "\n            <div *ngIf=\"hero\">\n                <h2>{{hero.name}} details!</h2>\n                <div><label>id: </label>{{hero.id}}</div>\n                <div>\n                    <label>name: </label>\n                    <input [(ngModel)]=\"hero.name\" placeholder=\"name\"/>\n                </div>\n            </div>    \n            "
-    })
+    }),
+    __metadata("design:paramtypes", [hero_service_1.HeroService,
+        router_1.ActivatedRoute,
+        common_1.Location])
 ], HeroDetailComponent);
 exports.HeroDetailComponent = HeroDetailComponent;
 //# sourceMappingURL=hero-detail.component.js.map
